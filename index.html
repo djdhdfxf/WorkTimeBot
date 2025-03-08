@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Учет сотрудников</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Учет сотрудников</h1>
+        <p>Выберите себя из списка:</p>
+        <select id="employee-list">
+            <option value="">Сотрудники</option>
+            <option value="dmitry">Дмитрий Шалдонский</option>
+            <option value="artem">Иванов Артём</option>
+            <option value="arina">Арина Веснина</option>
+        </select>
+        <button id="open-card">Открыть карточку</button>
+    </div>
+
+    <div id="employee-card" class="hidden">
+        <h2 id="employee-name"></h2>
+        <img id="employee-photo" src="placeholder.jpg" alt="Фото сотрудника">
+        <button id="start-shift">Выход на смену</button>
+        <button id="end-shift">Завершить смену</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
