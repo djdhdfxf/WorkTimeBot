@@ -1,30 +1,5 @@
 document.getElementById("start-shift").addEventListener("click", function() {  
     if (currentEmployee) {  
-        const initData = window.Telegram.WebApp.initData;  
-        const form = new FormData();  
-        form.append('employee_id', currentEmployee);  
-        form.append('initData', initData);  
-        if (uploadedPhoto) {  
-            form.append('photo', uploadedPhoto);  
-        }  
-        fetch('http://localhost:5000/start_shift', {  
-            method: 'POST',  
-            body: form  
-        })  
-        .then(response => response.json())  
-        .then(data => {  
-            alert("Shift started successfully!");  
-        })  
-        .catch(error => {  
-            alert("Error starting shift: " + error.message);  
-        });  
-    } else {  
-        alert("No employee selected!");  
-    }  
-});  
-
-document.getElementById("start-shift").addEventListener("click", function() {  
-    if (currentEmployee) {  
         captureAndSendPhoto('start_shift');  
     } else {  
         alert("No employee selected!");  
