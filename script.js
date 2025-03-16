@@ -18,6 +18,12 @@ document.getElementById("view-details").addEventListener("click", function() {
                 document.getElementById("details-photo").src = "placeholder.jpg";  
             }  
         })  
+            startButton.setAttribute("disabled", "true");  
+endButton.setAttribute("disabled", "true");
+
+        mediaStream.getTracks().forEach(track => track.stop());  
+videoElement.srcObject = null;  
+        
         .catch(error => {  
             console.error("Error fetching employee details:", error);  
             alert("Ошибка при загрузке деталей сотрудника.");  
