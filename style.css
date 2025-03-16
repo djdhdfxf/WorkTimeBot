@@ -40,3 +40,16 @@ button:hover {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     display: inline-block;
 }
+
+#employee-details {  
+    margin-top: 20px;  
+    padding: 20px;  
+    background: white;  
+    border-radius: 10px;  
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);  
+    display: inline-block;  
+}  
+#employee-details img {  
+    max-width: 200px;  
+    margin-top: 10px;  
+}  
