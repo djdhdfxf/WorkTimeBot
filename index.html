@@ -3,43 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Учет сотрудников</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Telegram Checker</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Учет сотрудников</h1>
-        <p>Выберите себя из списка:</p>
-        <select id="employee-list">
-            <option value="">Сотрудники</option>
-            <option value="dmitry">Дмитрий Шалдонский</option>
-            <option value="artem">Иванов Артём</option>
-            <option value="arina">айбек маметов</option>
-        </select>
-        <button id="open-card">Открыть карточку</button>
+        <h2>Telegram Checker</h2>
+        <input type="file" id="fileInput">
+        <input type="text" id="apiId" placeholder="API ID">
+        <input type="text" id="apiHash" placeholder="API Hash">
+        <input type="text" id="phoneNumber" placeholder="Phone Number">
+        <button id="checkBtn">Сбор username</button>
+        <ul id="results"></ul>
     </div>
-
-    <div id="employee-card" class="hidden">
-        <h2 id="employee-name"></h2>
-        <img id="employee-photo" src="placeholder.jpg" alt="Фото сотрудника">
-        <button id="start-shift">Выход на смену</button>
-        <button id="end-shift">Завершить смену</button>
-        <video id="camera-feed" style="display: none;"></video>  
-        <canvas id="photo-canvas" style="display: none;"></canvas>
-    </div>
-
-<div id="employee-details" class="hidden">  
-    <h3>Детали сотрудника</h3>  
-    <p id="details-name"></p>  
-    <p id="details-shift-start">Время прихода: -</p>  
-    <p id="details-shift-end">Время ухода: -</p>  
-    <img id="details-photo" src="placeholder.jpg" alt="Today's Photo">  
-    <button id="view-details">Подробности</button>
-</div>  
-    
-    <script src="script.js"></script>
-
-
-
+    <script>
+        document.getElementById("checkBtn").addEventListener("click", async () => {
+            const fileInput = document.getElementById("fileInput").files[0];
+            const apiId = document.getElementById("apiId").value;
+            const apiHash = document.getElementById("apiHash").value;
+            const phoneNumber = document.getElementById("phoneNumber").value;
+            const resultsList = document.getElementById("results");
+            
+            if (!fileInput || !apiId || !apiHash || !phoneNumber) {
+                alert("Заполните все поля и загрузите файл!");
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append("file", fileInput);
+            formData.append("apiId", apiId);
+            formData.append("apiHash", apiHash);
+            formData.append("phoneNumber", phoneNumber);
+            
+            try {
+                const response = await fetch("/api/check-numbers", {
+                    method: "POST",
+                    body: formData
+                });
+                
+                const data = await response.json();
+                resultsList.innerHTML = "";
+                data.results.forEach(res => {
+                    const li = document.createElement("li");
+                    li.textContent = res;
+                    resultsList.appendChild(li);
+                });
+            } catch (error) {
+                console.error("Ошибка запроса:", error);
+            }
+        });
+    </script>
 </body>
 </html>
+
