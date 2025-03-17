@@ -23,31 +23,43 @@
             const apiHash = document.getElementById("apiHash").value;
             const phoneNumber = document.getElementById("phoneNumber").value;
             const resultsList = document.getElementById("results");
-            
+
             if (!fileInput || !apiId || !apiHash || !phoneNumber) {
                 alert("Заполните все поля и загрузите файл!");
                 return;
             }
-            
+
             const formData = new FormData();
             formData.append("file", fileInput);
             formData.append("apiId", apiId);
             formData.append("apiHash", apiHash);
             formData.append("phoneNumber", phoneNumber);
-            
+
             try {
                 const response = await fetch("/api/check-numbers", {
                     method: "POST",
                     body: formData
                 });
-                
+
                 const data = await response.json();
                 resultsList.innerHTML = "";
+                let resultText = "";
+                
                 data.results.forEach(res => {
                     const li = document.createElement("li");
                     li.textContent = res;
                     resultsList.appendChild(li);
+                    resultText += res + "\n";
                 });
+                
+                // Создаем текстовый файл и скачиваем его
+                const blob = new Blob([resultText], { type: "text/plain" });
+                const a = document.createElement("a");
+                a.href = URL.createObjectURL(blob);
+                a.download = "telegram_results.txt";
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
             } catch (error) {
                 console.error("Ошибка запроса:", error);
             }
@@ -55,4 +67,3 @@
     </script>
 </body>
 </html>
-
